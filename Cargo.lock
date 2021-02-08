@@ -57,7 +57,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ccac4b00700875e6a07c6cde370d44d32fa01c5a65cdd2fca6858c479d28bb3"
 
 [[package]]
-name = "rocket_scaffolding"
+name = "mime"
 version = "0.1.0"
 dependencies = [
  "clap",

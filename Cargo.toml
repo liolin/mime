@@ -1,5 +1,5 @@
 [package]
-name = "rocket_scaffolding"
+name = "mime"
 version = "0.1.0"
 authors = ["Olivier Lischer <olivier.lischer@liolin.ch>"]
 edition = "2018"
