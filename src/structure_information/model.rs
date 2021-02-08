@@ -7,19 +7,16 @@ use crate::GenerationConfig;
 #[derive(Debug)]
 pub struct ModelDefinition {
     model_data: ModelData,
-    model_dir: String,
 }
 
 impl ModelDefinition {
     pub fn new(data: ModelData) -> Self {
-        Self {
-            model_data: data,
-            model_dir: "models".to_owned(),
-        }
+        Self { model_data: data }
     }
 
     pub fn generate(&self, config: GenerationConfig) -> std::io::Result<()> {
-        let model_dir = Path::new(&self.model_dir);
+        let model_dir = config.model_dir();
+        let model_dir = Path::new(&model_dir);
         let file_path = model_dir
             .join(&self.model_data.file_name)
             .with_extension("rs");

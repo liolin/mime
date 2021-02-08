@@ -18,15 +18,31 @@ fn main() {
         .subcommand(
             SubCommand::with_name("generate")
                 .setting(AppSettings::SubcommandRequired)
+                .help_short("Generate source code files")
                 .subcommand(
                     SubCommand::with_name("model")
-                        .arg(Arg::with_name("name").index(1).help("TODO").required(true))
-                        .arg(Arg::with_name("field").multiple(true).help("TODO"))
+                        .arg(
+                            Arg::with_name("name")
+                                .index(1)
+                                .help("The name of the new model")
+                                .required(true),
+                        )
+                        .arg(Arg::with_name("field").multiple(true).help(
+                            "The fields in the format name:type:visability (visability pub/pri)",
+                        ))
+                        .arg(
+                            Arg::with_name("directory")
+                                .long("dir")
+                                .short("d")
+                                .takes_value(true)
+                                .value_name("DIR")
+                                .help("Specify the models directory (default is src/models)"),
+                        )
                         .arg(
                             Arg::with_name("force")
                                 .long("force")
                                 .short("f")
-                                .help("TODO"),
+                                .help("Overwrites an existing file without warining"),
                         ),
                 ),
         )
