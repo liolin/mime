@@ -24,3 +24,8 @@ struct Model {
     secret: String,
 }
 ```
+
+## TODO
+- Generate Diesel models
+- Generate rocket controllers
+- Generate Barrel (for Diesel) migration

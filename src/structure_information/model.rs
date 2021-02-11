@@ -15,6 +15,10 @@ impl ModelDefinition {
     }
 
     pub fn generate(&self, config: GenerationConfig) -> std::io::Result<()> {
+        if config.dry_run() {
+            return Ok(());
+        }
+
         let model_dir = config.model_dir();
         let model_dir = Path::new(&model_dir);
         let file_path = model_dir
@@ -46,11 +50,12 @@ impl fmt::Display for ModelDefinition {
 pub struct ModelData {
     class_name: String,
     file_name: String,
+    table_name: String,
     field_data: Vec<FieldDefinition>,
 }
 
 impl ModelData {
-    pub fn new(name: &str, fields: Vec<FieldDefinition>) -> Self {
+    pub fn new(name: &str, table: &str, fields: Vec<FieldDefinition>) -> Self {
         // transform first character to an its uppercase counter part
         let mut chars = name.chars();
         let uppercase_char: String = chars.next().unwrap().to_uppercase().collect();
@@ -63,6 +68,7 @@ impl ModelData {
         Self {
             class_name: uppercase_name.to_owned(),
             file_name: lowercase_name.to_owned(),
+            table_name: table.to_owned(),
             field_data: fields,
         }
     }

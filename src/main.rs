@@ -27,6 +27,14 @@ fn main() {
                                 .help("The name of the new model")
                                 .required(true),
                         )
+                        .arg(
+                            Arg::with_name("table")
+                                .long("table")
+                                .short("t")
+                                .takes_value(true)
+                                .value_name("TABLE")
+                                .help("The name of the model corresponding table"),
+                        )
                         .arg(Arg::with_name("field").multiple(true).help(
                             "The fields in the format name:type:visability (visability pub/pri)",
                         ))
@@ -43,6 +51,12 @@ fn main() {
                                 .long("force")
                                 .short("f")
                                 .help("Overwrites an existing file without warining"),
+                        )
+                        .arg(
+                            Arg::with_name("dry")
+                                .long("dry-run")
+                                .short("e")
+                                .help("Just prints the generate but not write the files"),
                         ),
                 ),
         )
@@ -63,6 +77,8 @@ fn run_generate(matches: &ArgMatches) {
 
 fn run_generate_model(matches: &ArgMatches) {
     let model_name = matches.value_of("name").unwrap();
+    let table_name = matches.value_of("table").unwrap_or(model_name);
+
     let fields: Vec<_> = matches.values_of("field").unwrap().collect();
     let config = GenerationConfig::from(matches);
     let fields: Vec<_> = fields
@@ -70,10 +86,11 @@ fn run_generate_model(matches: &ArgMatches) {
         .map(|s| FieldDefinition::from_str(s).unwrap())
         .collect();
 
-    let model_data = ModelData::new(model_name, fields);
+    let model_data = ModelData::new(model_name, table_name, fields);
     let model = ModelDefinition::new(model_data);
 
     println!("Generate the following model:\n");
     print!("{}", model);
+
     model.generate(config).unwrap();
 }
