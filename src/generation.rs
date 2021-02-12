@@ -1,7 +1,7 @@
 use clap::ArgMatches;
 use std::convert::From;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct GenerationConfig {
     force: bool,
     dry_run: bool,
@@ -38,3 +38,6 @@ impl<'a> From<&ArgMatches<'a>> for GenerationConfig {
         }
     }
 }
+
+#[cfg(test)]
+mod test {}
